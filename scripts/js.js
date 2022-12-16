@@ -81,8 +81,8 @@ function activarBotones() {
         }
     });
     botones[2].addEventListener("click", function () {
-        if (guita >= (mejoras[2].precio * mejoras[2].unidades)) {
-            guita -= (mejoras[2].precio * mejoras[2].unidades);
+        if (guita >= (mejoras[2].precio * ((mejoras[2].unidades)+1))) {
+            guita -= (mejoras[2].precio * ((mejoras[2].unidades)+1));
             mejoras[2].unidades++;
             datos.m3++;
         }
