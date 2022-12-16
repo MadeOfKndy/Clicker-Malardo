@@ -1,0 +1,15 @@
+<tr>
+            <td><p id="a"></p></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><input type="button" id="b" value=""></td>
+            <td><input type="button" id="mejora2" value=""></td>
+            <td><input type="button" id="mejora3" value=""></td>
+        </tr>
+        <tr>
+            <td><p id="c"></p></td>
+            <td><p id="ups2"></p></td>
+            <td><p id="ups3"></p></td>
+        </tr>
