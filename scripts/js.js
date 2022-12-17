@@ -35,7 +35,7 @@ let mejoras = [{
 inicializar();
 
 function inicializar() {
-    if(localStorage.getItem("g")!=0){
+    if (localStorage.getItem("g") != 0) {
         cargar();
     }
     dibujarTabla();
@@ -52,7 +52,7 @@ function inicializar() {
     setInterval(function () {
         actualizar();
     }, 10);
-    setInterval(function(){
+    setInterval(function () {
         guardar();
     }, 5000);
 }
@@ -81,13 +81,13 @@ function activarBotones() {
         }
     });
     botones[2].addEventListener("click", function () {
-        if (guita >= (mejoras[2].precio * ((mejoras[2].unidades)+1))) {
-            guita -= (mejoras[2].precio * ((mejoras[2].unidades)+1));
+        if (guita >= (mejoras[2].precio * ((mejoras[2].unidades) + 1))) {
+            guita -= (mejoras[2].precio * ((mejoras[2].unidades) + 1));
             mejoras[2].unidades++;
             datos.m3++;
         }
     });
-    reset.addEventListener("click", function(){
+    reset.addEventListener("click", function () {
         reiniciar();
     })
 }
@@ -96,7 +96,10 @@ function actualizarVisual() {
     cantidad.innerHTML = guita.toFixed(2) + '€';
     for (var i = 0; i < mejoras.length; i++) {
         nombres[i].innerHTML = mejoras[i].nombre + "(" + mejoras[i].unidades + ")";
-        botones[i].value = mejoras[i].precio + (1 * mejoras[i].unidades) + "€";
+        if (i != 2)
+            botones[i].value = mejoras[i].precio + (1 * mejoras[i].unidades) + "€";
+        else
+            botones[i].value = mejoras[2].precio * ((mejoras[2].unidades) + 1)+ "€";
     }
 }
 
@@ -142,7 +145,7 @@ function guardar() {
     localStorage.setItem("m3", datos.m3);
 }
 
-function cargar(){
+function cargar() {
     datos.g = Number(localStorage.getItem("g"));
     datos.m1 = Number(localStorage.getItem("m1"));
     datos.m2 = Number(localStorage.getItem("m2"));
@@ -150,7 +153,7 @@ function cargar(){
     guita = datos.g;
 }
 
-function sincronizarMejoras(){
+function sincronizarMejoras() {
     mejoras[0].unidades = Number(datos.m1);
     mejoras[1].unidades = Number(datos.m2);
     mejoras[2].unidades = Number(datos.m3);
