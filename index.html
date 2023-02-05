@@ -1,20 +1,32 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8" author="Kndy">
+    <meta charset="UTF-8" author="Kndy (¡y Nana!)">
     <title>Clicker malardo</title>
     <link href="styles/style.css" rel="stylesheet">
 </head>
 <body>
+    <button onclick="guardar()" title="El juego guarda automáticamente cada 5 segundos, de todas formas puedes guardar manualmente con este botón.">Guardar</button>
     <p id="cantidad"></p>
-    <input type="button" id="boton" value="clicar">
-
+    <button onclick="incremento()" title="Eh, a qué esperas, ¡clícame! Vamos, sabes que esto es como edgeing para los botones, ¿no?">Clicar</button>
     <h3>Tienda</h3>
     <table id = "tienda">
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><button id="m1">a</button></td>
+            <td><button id="m2">b</button></td>
+            <td><button id="m3">c</button></td>
+        </tr>
+        
         
     </table>
     <br><br>
-    <input type="button" id="reset" value="reiniciar">
+    
+    <button onclick="reiniciar()" title="Pica para volver a cero.">Reiniciar</button>
     <script type="text/javascript" src="scripts/js.js"></script>
 </body>
 </html>
