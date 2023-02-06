@@ -1,100 +1,109 @@
-let guita = Number(0);
-let aux;
-const boton = window.document.getElementById("boton");
-const cantidad = window.document.getElementById("cantidad");
-const tienda = window.document.getElementById("tienda");
-const reset = window.document.getElementById("reset");
-const nombres = [];
-const botones = [];
+let guita = Number(10000000);
 
 
+//Array con datos de cada mejora
 let mejoras = [{
-    id: "m1",
+    idTexto: "m1",
+    idBoton: "b1",
     nombre: "Mejora",
     unidades: Number(0),
     precio: Number(10),
+    precioInicial: Number(10),
     multiplicador: 0.0011
 }, {
-    id: "m2",
+    idTexto: "m2",
+    idBoton: "b2",
     nombre: "Movida",
     unidades: Number(0),
     precio: Number(100),
+    precioInicial: Number(100),
     multiplicador: 0.01
 }, {
-    id: "m3",
+    idTexto: "m3",
+    idBoton: "b3",
     nombre: "NFT",
     unidades: Number(0),
     precio: Number(1000000),
+    precioInicial: Number(1000000),
     multiplicador: 0
 }];
 
 
-inicializar();
 
-function inicializar() {
-    if (localStorage.getItem("g") != 0) {
-        cargar();
-    }
-    // dibujarTabla();
-    // for (var i = 0; i < mejoras.length; i++) {
-    //     aux = i;
-    //     nombres[aux] = document.getElementById("nombre" + mejoras[aux].id);
-    //     botones[aux] = document.getElementById("precio" + mejoras[aux].id);
-    // }
-    activarBotones();
-    setInterval(function () {
-        actualizarGuita();
-    }, 10);
-    setInterval(function () {
-        guardar();
-    }, 5000);
+
+
+
+
+//Carga el localStorage
+// if (localStorage.getItem("g") != 0) {
+//     cargar();
+// }
+
+//Dibuja todads las mejoras al cargar la página
+for (let i = 0; i < mejoras.length; i++) {
+    actualizarMejora(i)
 }
+
+//Esto va actualizando la guita constantemente
+setInterval(function () { 
+   for (var i = 0; i < mejoras.length; i++) {
+        guita = Number(guita) + Number(mejoras[i].multiplicador * mejoras[i].unidades);
+   }
+   document.getElementById("cantidad").innerHTML = guita.toFixed(2) + "€"
+}, 10);
+
+
+//Esto va guardando
+setInterval(function () {
+    guardar();
+}, 5000);
+
+
+
+
+
+
+
+
+//Funciones para los botones (porque ahora los botones funcionan con funciones y no con EventListeners, así pueden ser referenciados desde otros sitios)
 
 //Esto hace que suba el dinero cuando picas
 function incremento() {
     guita += 1 + mejoras[0].unidades * mejoras[0].multiplicador;
 }
 
-
-//Esto hace que funcionen los botones, se hace al principio pero como es un addEventListener se queda hecho :3
-function activarBotones() {
-    document.getElementById("m1").addEventListener("click", function () {
-        if (guita >= (mejoras[0].precio + (1 * mejoras[0].unidades))) {
-            guita -= (mejoras[0].precio + (1 * mejoras[0].unidades));
-            mejoras[0].unidades++;
+//Esta función compra una de las mejoras, siendo m la mejora (en el array mejoras) que se ha intentado comprar. Cuando m sea 2, se habrá comprado un NFT.
+function comprar(m){
+    if (guita >= mejoras[m].precio) {
+        if (m!=2) {
+            guita -= (mejoras[m].precio)
+            mejoras[m].precio ++
+        } else {
+            guita -= (mejoras[m].precio)
+            mejoras[m].precio +=1000000
         }
-    });
-
-    document.getElementById("m2").addEventListener("click", function () {
-        if (guita >= (mejoras[1].precio + (1 * mejoras[1].unidades))) {
-            guita -= (mejoras[1].precio + (1 * mejoras[1].unidades));
-            mejoras[1].unidades++;
-        }
-    });
-
-    document.getElementById("m3").addEventListener("click", function () {
-        if (guita >= (mejoras[2].precio * ((mejoras[2].unidades) + 1))) {
-            guita -= (mejoras[2].precio * ((mejoras[2].unidades) + 1));
-            mejoras[2].unidades++;
-        }
-    });
-
-}
-
-
-
-//Esto hace correr la guita y dibujarla subiendo
-function actualizarGuita() {
-    for (var i = 0; i < mejoras.length; i++) {
-        guita = Number(guita) + Number(mejoras[i].multiplicador * mejoras[i].unidades);
+        mejoras[m].unidades++
+        actualizarMejora(m)
     }
-    document.getElementById("cantidad").innerHTML = guita.toFixed(2) + "€"
+}
+
+//Aquí se actualizan el precio y la cantidad de mejoras en la tabla de la tienda. No está dentro de la función comprar porque al cargar la página se le llama sin comprar nada
+function actualizarMejora(m){
+    document.getElementById(mejoras[m].idTexto).innerHTML = mejoras[m].nombre + " ("+ mejoras[m].unidades + ")"
+    document.getElementById(mejoras[m].idBoton).innerHTML = mejoras[m].precio + "€"
 }
 
 
 
 
 
+
+
+
+
+
+
+//Aqui las tres funciones que modifican el localStorage
 
 function reiniciar() {
     guita = 0
@@ -117,60 +126,8 @@ function cargar() {
     guita = Number(localStorage.getItem("g"));
     mejoras[0].unidades = Number(localStorage.getItem("m1"));
     mejoras[1].unidades = Number(localStorage.getItem("m2"));
-    mejoras[2].unidades = Number(localStorage.getItem("m3"));  
+    mejoras[2].unidades = Number(localStorage.getItem("m3")); 
+    
+    mejoras[0].precio = mejoras[0].precioInicial + mejoras[0].unidades
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// function actualizarVisual() {
-//     cantidad.innerHTML = guita.toFixed(2) + '€';
-//     for (var i = 0; i < mejoras.length; i++) {
-//         nombres[i].innerHTML = mejoras[i].nombre + "(" + mejoras[i].unidades + ")";
-//         if (i != 2)
-//             botones[i].value = mejoras[i].precio + (1 * mejoras[i].unidades) + "€";
-//         else
-//             botones[i].value = mejoras[2].precio * ((mejoras[2].unidades) + 1)+ "€";
-//     }
-// }
-// function dibujarTabla() {
-//     var t = "";
-//     for (var i = 1; i <= 2; i++) {
-//         t += "<tr>";
-//         switch (i) {
-//             case 1:
-//                 for (var j = 0; j < mejoras.length; j++) {
-//                     t += "<td id=\"nombre" + mejoras[j].id + "\"></td>";
-//                 }
-//                 break;
-//             case 2:
-//                 for (var j = 0; j < mejoras.length; j++) {
-//                     t += "<td><input type=\"button\" id=\"precio" + mejoras[j].id + "\"></td>";
-//                 }
-//                 break;
-//         }
-//         t += "</tr>";
-//     }
-//     tienda.innerHTML = t;
-// }
