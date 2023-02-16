@@ -1,7 +1,7 @@
-let guita = Number(10000000);
+let guita = Number(0);
 
 
-//Array con datos de cada mejora
+//Array con datos de cada mejora (idTexto: id del texto en el que poner unidades de mejoras, idBoton: id del boton en el que poner precio actual)
 let mejoras = [{
     idTexto: "m1",
     idBoton: "b1",
@@ -35,9 +35,9 @@ let mejoras = [{
 
 
 //Carga el localStorage
-// if (localStorage.getItem("g") != 0) {
-//     cargar();
-// }
+if (localStorage.getItem("g") != 0) {
+    cargar();
+}
 
 //Dibuja todads las mejoras al cargar la página
 for (let i = 0; i < mejoras.length; i++) {
@@ -50,7 +50,7 @@ setInterval(function () {
         guita = Number(guita) + Number(mejoras[i].multiplicador * mejoras[i].unidades);
    }
    document.getElementById("cantidad").innerHTML = guita.toFixed(2) + "€"
-}, 10);
+        }, 10);
 
 
 //Esto va guardando
@@ -69,7 +69,7 @@ setInterval(function () {
 
 //Esto hace que suba el dinero cuando picas
 function incremento() {
-    guita += 1 + mejoras[0].unidades * mejoras[0].multiplicador;
+    guita += 1 + (mejoras[0].unidades * mejoras[0].multiplicador);
 }
 
 //Esta función compra una de las mejoras, siendo m la mejora (en el array mejoras) que se ha intentado comprar. Cuando m sea 2, se habrá comprado un NFT.
@@ -80,7 +80,7 @@ function comprar(m){
             mejoras[m].precio ++
         } else {
             guita -= (mejoras[m].precio)
-            mejoras[m].precio +=1000000
+            mejoras[m].precio = mejoras[m].precio * 2
         }
         mejoras[m].unidades++
         actualizarMejora(m)
@@ -107,27 +107,54 @@ function actualizarMejora(m){
 
 function reiniciar() {
     guita = 0
-    mejoras[0].unidades = 0
-    mejoras[1].unidades = 0
-    mejoras[2].unidades = 0
+
+    for(var i = 0; i < mejoras.length; i++){
+        mejoras[i].unidades=0
+        mejoras[i].precio = mejoras[i].precioInicial
+        actualizarMejora(i)
+        
+    }
     guardar()
+    esconderDivReiniciar()
+
 }
 
 
 function guardar() {
     localStorage.setItem("g", guita);
-    localStorage.setItem("m1", mejoras[0].unidades);
-    localStorage.setItem("m2", mejoras[1].unidades);
-    localStorage.setItem("m3", mejoras[2].unidades);
+    for (let i = 0; i < mejoras.length; i++) {
+        localStorage.setItem(mejoras[i].idTexto, mejoras[i].unidades);
+    }
 }
-
 
 function cargar() {
     guita = Number(localStorage.getItem("g"));
-    mejoras[0].unidades = Number(localStorage.getItem("m1"));
-    mejoras[1].unidades = Number(localStorage.getItem("m2"));
-    mejoras[2].unidades = Number(localStorage.getItem("m3")); 
-    
+    for (let i = 0; i < mejoras.length; i++) {
+        mejoras[i].unidades = Number(localStorage.getItem(mejoras[i].idTexto));
+    }
+   
     mejoras[0].precio = mejoras[0].precioInicial + mejoras[0].unidades
+    mejoras[1].precio = mejoras[1].precioInicial + mejoras[1].unidades
+    mejoras[2].precio = mejoras[2].precioInicial*(Math.pow(mejoras[2].unidades + 1 , 2))
+
+
 }
+
+
+
+
+
+//Estas funciones muestran u ocultan el div rojo del botón de reiniciar
+
+function mostrarDivReiniciar(){
+    document.getElementById("divReiniciar").style.visibility = "visible"
+}
+
+function esconderDivReiniciar(){
+    document.getElementById("divReiniciar").style.visibility = "hidden"
+}
+
+
+
+
 

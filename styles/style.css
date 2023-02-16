@@ -1,0 +1,16 @@
+body{
+    background-color: grey;
+}
+
+#divReiniciar{
+    border: solid red 10px;
+    padding: 5px;
+    background-color: rgb(226, 105, 105);
+    margin: 5px;
+    visibility: hidden;
+    max-width: 600px;
+}
+
+#botonReiniciarEnDiv{
+    float: right
+}

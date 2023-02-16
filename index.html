@@ -25,7 +25,14 @@
     </table>
     <br><br>
     
-    <button onclick="reiniciar()" title="Pica para volver a cero.">Reiniciar</button>
+    <button id="botonReiniciar" onclick="mostrarDivReiniciar()" title="Pica para volver a cero.">Reiniciar</button>
+    
+    <div id="divReiniciar">
+        <h2>¿Estás seguro de querer reiniciar? Perderás todo tu progreso</h2>
+        <button onclick="esconderDivReiniciar()">Cancelar</button>
+        <button onclick="reiniciar()" id="botonReiniciarEnDiv">Reiniciar</button>
+    </div>
+
     <script type="text/javascript" src="scripts/js.js"></script>
 </body>
 </html>
