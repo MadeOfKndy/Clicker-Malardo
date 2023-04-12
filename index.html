@@ -1,20 +1,43 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8" author="Kndy">
+    <meta charset="UTF-8" author="Kndy (¡y Nana!)">
     <title>Clicker malardo</title>
     <link href="styles/style.css" rel="stylesheet">
 </head>
 <body>
+    <button onclick="botonGuardarClicado()" id="botonGuardar" title="El juego guarda automáticamente cada 5 segundos, de todas formas puedes guardar manualmente con este botón."><del>Guardar</del></button>
     <p id="cantidad"></p>
-    <input type="button" id="boton" value="clicar">
-
+    <button onclick="incremento()" title="Eh, a qué esperas, ¡clícame! Vamos, sabes que esto es como edgeing para los botones, ¿no?">Clicar</button>
+    
     <h3>Tienda</h3>
     <table id = "tienda">
-        
+        <tr>
+            <td id="m1">Error</td>
+            <td id="m2">Error</td>
+            <td id="m3">Error</td>
+        </tr>
+        <tr>
+            <td><button id="b1" onclick="comprar(0)">Error</button></td>
+            <td><button id="b2" onclick="comprar(1)">Error</button></td>
+            <td><button id="b3" onclick="comprar(2)">Error</button></td>
+        </tr>
     </table>
     <br><br>
-    <input type="button" id="reset" value="reiniciar">
-    <script type="text/javascript" src="scripts/js.js"></script>
+    
+    <button id="botonReiniciar" onclick="mostrarDivReiniciar()" title="Pica para volver a cero.">Reiniciar</button>
+    
+    <div id="divReiniciar">
+        <h2>¿Estás seguro de querer reiniciar? Perderás todo tu progreso</h2>
+        <button onclick="esconderDivReiniciar()">Cancelar</button>
+        <button onclick="reiniciar()" id="botonReiniciarEnDiv">Reiniciar</button>
+    </div>
+
 </body>
+<!-- IMPORTANTE si se pone algo en un archivo que no sea el js.js HA DE SER UNA FUNCIÓN, y el js.js ha de estar el último de todos siempre -->
+<script type="text/javascript" src="scripts/guitaYTienda.js"></script>
+<script type="text/javascript" src="scripts/btnGuardarReiniciar.js"></script>
+<script type="text/javascript" src="scripts/saveLoad.js"></script>
+<script type="text/javascript" src="scripts/js.js"></script>
+
 </html>
