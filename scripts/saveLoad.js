@@ -39,9 +39,19 @@ function cargar() {
     mejoras[2].precio = mejoras[2].precioInicial*(Math.pow(mejoras[2].unidades + 1 , 2))
 
 
+
     //botón de guardar (por defecto no está comprado)
-    isBotonGuardarComprado = localStorage.getItem("isBotonGuardarComprado")
-    if (isBotonGuardarComprado){document.getElementById("botonGuardar").innerHTML = "Guardar"}
+    if(localStorage.getItem('isBotonGuardarComprado') != null){
+        if(localStorage.getItem('isBotonGuardarComprado') == 'true'){
+            isBotonGuardarComprado = true
+        }
+        if(localStorage.getItem('isBotonGuardarComprado') == 'false'){
+            isBotonGuardarComprado = true
+        }
+    }
+    if(isBotonGuardarComprado){
+        document.getElementById("botonGuardar").innerHTML = "Guardar"
+    }
 
     
 }
