@@ -46,7 +46,7 @@ function cargar() {
             isBotonGuardarComprado = true
         }
         if(localStorage.getItem('isBotonGuardarComprado') == 'false'){
-            isBotonGuardarComprado = true
+            isBotonGuardarComprado = false
         }
     }
     if(isBotonGuardarComprado){
